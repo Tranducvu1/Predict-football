@@ -1,9 +1,34 @@
-# Predict-match-result
-Preditc match
-## Cách sử dụng
+# Predict Project
 
-Để sử dụng dự án này, hãy làm theo các bước sau:
 
-1. Clone kho lưu trữ này.
-3. Chạy chương trình.
-python app.py
+### Technologies Used:
+- Flask
+- Python 3.9
+- Any additional libraries you used
+
+### Folder Structure (Highlighted):
+```
+predict-football/
+│
+├── app.py
+├── data.csv
+├── vercel.json
+├── requirement.txt
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── images/
+│
+└── templates/
+    └── index.html
+    └── index2.html
+    └── index3.html    
+    
+```
+
+
+### How to Clone & Run:
+1. Clone Repo: `git clone https://github.com/Tranducvu1/Predict-football.git`
+3. Run Locally: `python app.py`
