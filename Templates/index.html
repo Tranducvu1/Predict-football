@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Dự đoán kết quả trận đấu</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+          $('.logo-namegame button').click(function() {
+            var buttonId = $(this).attr('id');
+            $.ajax({
+              url: '/get_clubs',
+              type: 'POST',
+              data: { 'logo_id': buttonId },
+              success: function(response) {
+                $('#home_team, #away_team').empty().append(
+                  response.clubs.map(club => $('<option></option>').val(club).text(club))
+                );
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
+          });
+        });
+      </script>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="logo-row">
+            <div class="logo-namegame">
+                <button id="game-logo">
+                    <a href="{{ url_for('home') }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='logogame.svg') }}" alt="Game Logo">
+                    </a>
+                </button>
+            </div>
+            <div class="logo-namegame">
+                <button id="laliga-logo">
+                    <a href="{{ url_for('home2') }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='laliga.jpg') }}" alt="La Liga Logo">
+                    </a>
+                </button>
+            </div>
+            <div class="logo-namegame">
+                <button id="nha-logo">
+                    <a href="{{ url_for('home3') }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ url_for('static', filename='nha.jpg') }}" alt="NHA Logo">
+                    </a>
+                </button>
+            </div>
+        </div>
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="home_team">Chọn đội</label>
+                <select class="custom-select" id="home_team" name="home_team">
+                    {% for team in teams1 %}
+                        <option value="{{ team }}">{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="away_team">Chọn đội</label>
+                <select class="custom-select" id="away_team" name="away_team">
+                    {% for team in teams1 %}
+                        <option value="{{ team }}">{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hosting">Chọn đội nào là chủ nhà</label>
+                <select class="custom-select" id="hosting" name="hosting">
+                    <option value="Home">Home</option>
+                    <option value="Away">Away</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-predict">Predict</button>
+        </form>
+    </div>
+</body>
+</html>
